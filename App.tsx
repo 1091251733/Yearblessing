@@ -316,7 +316,7 @@ const App: React.FC = () => {
 
           {/* Body */}
           <div className="flex-1 p-4 sm:p-6 relative flex flex-col items-center justify-between min-h-0">
-            {/* Corner Decorations - 响应式缩小 */}
+            {/* Corner Decorations - 响应式缩小sd */}
             <div className="absolute top-3 left-3 w-10 h-10 sm:w-12 sm:h-12 border-t-2 border-l-2 border-red-900/20 rounded-tl-xl"></div>
             <div className="absolute top-3 right-3 w-10 h-10 sm:w-12 sm:h-12 border-t-2 border-r-2 border-red-900/20 rounded-tr-xl"></div>
             <div className="absolute bottom-3 left-3 w-10 h-10 sm:w-12 sm:h-12 border-b-2 border-l-2 border-red-900/20 rounded-bl-xl"></div>
