@@ -1,7 +1,7 @@
 export const ASSETS = {
-  BG_MUSIC: "/assets/bgm.mp3",
-  BLESS_LABEL: "/assets/bless-label.png",
-  SHAKE_SOUND: "/assets/shaken.mp3",
+  BG_MUSIC: "/bgm.mp3",
+  BLESS_LABEL: "/bless-label.png",
+  SHAKE_SOUND: "/shaken.mp3",
 };
 
 export const BLESSINGS = [
