@@ -261,7 +261,7 @@ const App: React.FC = () => {
           isShaking ? "animate-shake-pot" : ""
         } transition-transform`}
       >
-        {/* Use the specific image requested by user */}
+        {/* Use the specific image requestedss by user */}
         <img
           src={ASSETS.BLESS_LABEL}
           alt="Shake Fortune"
