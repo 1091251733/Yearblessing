@@ -1,0 +1,7 @@
+{
+  "name": "New Year's Blessing 2021",
+  "description": "An interactive festive experience to shake for fortune, record blessings, and share the new year spirit.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
