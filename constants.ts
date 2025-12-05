@@ -777,7 +777,7 @@ export const BLESSINGS = [
   },
   {
     id: 155,
-    keyword: "奶茶天天买一送一",
+    keyword: "奶茶买一送一",
     text: "喝到店员喊我家人，钱包却不瘦。",
   },
   {

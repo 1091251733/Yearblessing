@@ -289,47 +289,74 @@ const App: React.FC = () => {
   const renderResult = () => {
     if (!result) return null;
     return (
-      <div className="flex flex-col items-center justify-center h-full w-full p-4 animate-fade-in overflow-hidden">
-        {/* Card Container */}
+      <div className="flex flex-col items-center justify-center min-h-screen w-full p-4 animate-fade-in ">
+        {/* Card Container - 关键：去掉固定 aspect-[3/5]，改用动态高度 */}
         <div
           ref={resultCardRef}
-          className="relative w-full max-w-sm aspect-[3/5] bg-[#FDF6E3] rounded-2xl overflow-hidden shadow-2xl border-4 border-double border-red-900/20 flex flex-col"
+          className="relative w-full max-w-sm 
+               bg-[#FDF6E3] rounded-2xl overflow-hidden shadow-2xl 
+               border-4 border-double border-red-900/20 
+               flex flex-col
+               mx-auto
+               h-auto 
+               min-h-[500px] 
+               max-h-[90vh]                 
+               sm:min-h-[580px]"
         >
           {/* Top Pattern */}
-          <div className="h-16 bg-red-900 flex items-center justify-between px-6 relative overflow-hidden">
+          <div className="h-14 sm:h-16 bg-red-900 flex items-center justify-between px-4 sm:px-6 relative overflow-hidden flex-shrink-0">
             <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')]"></div>
-            <div className="text-yellow-200 text-xs tracking-[0.3em]">
+            <div className="text-yellow-200 text-[10px] sm:text-xs tracking-[0.3em]">
               HAPPY NEW YEAR
             </div>
-            <div className="text-yellow-400 font-bold text-xl font-serif">
+            <div className="text-yellow-400 font-bold text-lg sm:text-xl font-serif">
               2026
             </div>
           </div>
 
           {/* Body */}
-          <div className="flex-1 p-6 relative flex flex-col items-center justify-between">
-            {/* Corner Decorations */}
-            <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-red-900/20 rounded-tl-xl"></div>
-            <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-red-900/20 rounded-tr-xl"></div>
-            <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-red-900/20 rounded-bl-xl"></div>
-            <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-red-900/20 rounded-br-xl"></div>
+          <div className="flex-1 p-4 sm:p-6 relative flex flex-col items-center justify-between min-h-0">
+            {/* Corner Decorations - 响应式缩小 */}
+            <div className="absolute top-3 left-3 w-10 h-10 sm:w-12 sm:h-12 border-t-2 border-l-2 border-red-900/20 rounded-tl-xl"></div>
+            <div className="absolute top-3 right-3 w-10 h-10 sm:w-12 sm:h-12 border-t-2 border-r-2 border-red-900/20 rounded-tr-xl"></div>
+            <div className="absolute bottom-3 left-3 w-10 h-10 sm:w-12 sm:h-12 border-b-2 border-l-2 border-red-900/20 rounded-bl-xl"></div>
+            <div className="absolute bottom-3 right-3 w-10 h-10 sm:w-12 sm:h-12 border-b-2 border-r-2 border-red-900/20 rounded-br-xl"></div>
 
-            {/* Central Keyword - Vertical Typography */}
-            <div className="flex-1 flex items-center justify-center w-full py-4">
+            {/* Central Keyword - 关键：文字大小自适应 + 限制最大高度 */}
+            <div className="flex-1 flex items-center justify-center w-full py-2 sm:py-4">
               <div className="relative">
-                {/* Background Circle */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-red-900/10 rounded-full animate-spin-slow"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 border-2 border-red-900/5 rounded-full"></div>
+                {/* Background Circle - 缩小一点避免溢出 */}
+                <div
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                         w-40 h-40 sm:w-48 sm:h-48 border border-red-900/10 rounded-full animate-spin-slow"
+                ></div>
+                <div
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                         w-36 h-36 sm:w-40 sm:h-40 border-2 border-red-900/5 rounded-full"
+                ></div>
 
-                {/* Text */}
-                <div className="relative z-10 writing-vertical text-[40px] md:text-7xl font-black text-red-900 tracking-wider leading-relaxed drop-shadow-sm h-[300px] flex items-center justify-center">
+                {/* 核心：文字使用 clamp() 实现流体排版 */}
+                <div
+                  className="relative z-10 writing-vertical 
+                       text-[clamp(32px,10vw,68px)]           // 最小32px，最大68px，随屏幕宽度线性变化
+                       font-black text-red-900 tracking-wider 
+                       leading-relaxed drop-shadow-sm 
+                       flex items-center justify-center
+                       h-[280px] sm:h-[300px] 
+                       max-h-[40vh]"
+                >
                   {result.keyword}
                 </div>
 
-                {/* Stamp Seal */}
-                <div className="absolute -bottom-4 -right-8 w-16 h-16 border-2 border-red-700 rounded-lg transform rotate-12 flex items-center justify-center opacity-80 mix-blend-multiply">
-                  <div className="w-14 h-14 border border-red-700 rounded flex items-center justify-center">
-                    <span className="text-red-700 text-xs font-bold transform -rotate-14">
+                {/* Stamp Seal - 小屏也缩小 */}
+                <div
+                  className="absolute -bottom-3 -right-6 sm:-bottom-4 sm:-right-8 
+                         w-14 h-14 sm:w-16 sm:h-16 
+                         border-2 border-red-700 rounded-lg transform rotate-12 
+                         flex items-center justify-center opacity-80 mix-blend-multiply"
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 border border-red-700 rounded flex items-center justify-center">
+                    <span className="text-red-700 text-[10px] sm:text-xs font-bold transform -rotate-14">
                       上上签
                     </span>
                   </div>
@@ -337,13 +364,16 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Footer Text */}
-            <div className="w-full text-center mt-6 z-10">
-              <div className="bg-red-50/80 p-4 rounded-lg backdrop-blur-sm border border-red-100">
-                <div className="text-red-800 font-bold mb-2">
+            {/* Footer Text - 内容区域也加上最大高度限制 */}
+            <div className="w-full text-center mt-4 sm:mt-6 z-10 flex-shrink-0">
+              <div
+                className="bg-red-50/80 p-3 sm:p-4 rounded-lg backdrop-blur-sm border border-red-100 
+                        max-h-[160px] overflow-y-auto"
+              >
+                <div className="text-red-800 font-bold mb-2 text-sm sm:text-base">
                   To: {userName}
                 </div>
-                <p className="text-red-900/80 font-medium text-sm leading-6 tracking-wide">
+                <p className="text-red-900/80 font-medium text-xs sm:text-sm leading-6 tracking-wide">
                   {result.text}
                 </p>
               </div>
@@ -351,19 +381,19 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="mt-8 flex gap-4 w-full max-w-sm">
+        {/* Buttons - 固定在底部，不被压缩 */}
+        <div className="mt-6 sm:mt-8 flex gap-3 sm:gap-4 w-full max-w-sm flex-shrink-0">
           <button
             onClick={reset}
-            className="flex-1 py-3 bg-white/10 border border-white/20 rounded-full text-white font-medium hover:bg-white/20 transition-all backdrop-blur-md"
+            className="flex-1 py-3 bg-white/10 border border-white/20 rounded-full text-white text-sm sm:text-base font-medium hover:bg-white/20 transition-all backdrop-blur-md"
           >
             再抽一次
           </button>
           <button
             onClick={handleShare}
-            className="flex-1 py-3 bg-yellow-500 text-red-900 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition-all flex items-center justify-center gap-2"
+            className="flex-1 py-3 bg-yellow-500 text-red-900 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
           >
-            <span> {saving ? "保存中.." : "保存祝福"} </span>
+            <span>{saving ? "保存中.." : "保存祝福"}</span>
             <svg
               className="w-4 h-4"
               fill="none"
@@ -393,8 +423,9 @@ const App: React.FC = () => {
 
       {/* Effects */}
       <ParticleBackground />
-      {!result && <MusicControl />}
-
+      <div className={result ? "hidden" : ""}>
+        <MusicControl />
+      </div>
       {/* White Flash Overlay for Shake Result */}
       <div
         className={`absolute inset-0 bg-white z-50 pointer-events-none transition-opacity duration-500 ${
